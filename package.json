@@ -1,6 +1,7 @@
 {
   "name": "bloog",
   "version": "0.1.0",
+  "homepage": "https://nyamper.github.io/bloog",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.9.3",
