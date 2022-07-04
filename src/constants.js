@@ -49,4 +49,8 @@ export const itemData = [
     img: 'https://w0.peakpx.com/wallpaper/967/561/HD-wallpaper-one-cat-whats-up-there-cont-cute-adorable-funny-caption.jpg',
     title: 'Cat',
   },
+  {
+    img: 'https://w0.peakpx.com/wallpaper/967/561/HD-wallpaper-one-cat-whats-up-there-cont-cute-adorable-funny-caption.jpg',
+    title: 'Cat',
+  },
 ];
