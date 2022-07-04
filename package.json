@@ -1,6 +1,6 @@
 {
-  "homepage": "http://nyamper.github.io/blog",
-  "name": "blog",
+  "name": "bloog",
+  "homepage": "https://nyamper.github.io/bloog/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

@@ -5,7 +5,7 @@ import { useAxios } from '../../hooks/use-Axios';
 import CardBook from './CardBook';
 import Spinner from '../../components/Spinner';
 
-import { Box } from '@mui/material';
+import { StyledBoxWrapper, StyledBox } from './styles';
 import { Container } from '@mui/system';
 
 const Books = () => {
@@ -14,31 +14,18 @@ const Books = () => {
   return (
     <>
       <Container maxWidth="xl">
-        <Box
-          sx={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            alignContent: 'flex-start',
-          }}
-        >
+        <StyledBoxWrapper>
           {isLoading && !isError && <Spinner />}
           {isError && <Spinner status="error" />}
           {!isLoading &&
             books.map((book) => {
               return (
-                <Box
-                  key={book.id}
-                  sx={{
-                    mx: 2,
-                    width: 280,
-                    height: 400,
-                  }}
-                >
+                <StyledBox key={book.id}>
                   <CardBook book={book} />
-                </Box>
+                </StyledBox>
               );
             })}
-        </Box>
+        </StyledBoxWrapper>
       </Container>
     </>
   );

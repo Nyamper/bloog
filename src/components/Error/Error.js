@@ -3,7 +3,7 @@ import React from 'react';
 import { Alert, AlertTitle } from '@mui/material';
 import { Box } from '@mui/system';
 
-const Error = (cerror) => {
+const Error = () => {
   return (
     <>
       <Box
