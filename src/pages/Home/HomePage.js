@@ -3,6 +3,8 @@ import React from 'react';
 import { ImageList, ImageListItem, Typography } from '@mui/material';
 import { Container } from '@mui/system';
 
+import { StyledImageList } from './styles';
+
 import { itemData } from '../../constants';
 
 const HomePage = () => {
@@ -14,7 +16,7 @@ const HomePage = () => {
         </Typography>
         <Typography variant="h4">You can look at the cats for now</Typography>
 
-        <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
+        <StyledImageList cols={4} rowHeight={164}>
           {itemData.map((item) => (
             <ImageListItem key={item.img}>
               <img
@@ -25,7 +27,7 @@ const HomePage = () => {
               />
             </ImageListItem>
           ))}
-        </ImageList>
+        </StyledImageList>
       </Container>
     </>
   );

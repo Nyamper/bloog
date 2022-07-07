@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
-import client from '../api/client';
-
-export const useAxios = (params) => {
-  const [books, setBooks] = useState(undefined);
-  const [isError, setIsError] = useState('');
+export const useAxios = (getData) => {
+  const [books, setBooks] = useState(null);
+  const [isError, setIsError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchData = async () => {
     try {
-      const { data } = await client.get(params);
-      setBooks(data);
+      setIsLoading(true);
+      const response = await getData();
+      setBooks(response);
     } catch (error) {
       setIsError(error);
     } finally {

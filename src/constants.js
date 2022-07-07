@@ -1,4 +1,4 @@
-export const baseURL = 'https://fakerestapi.azurewebsites.net/api/v1/books';
+export const baseURL = 'https://fakerestapi.azurewebsites.net/api/v1';
 
 export const itemData = [
   {
@@ -43,10 +43,6 @@ export const itemData = [
   },
   {
     img: 'https://cdn.slidesharecdn.com/ss_thumbnails/funnykittycatvideos-150903100027-lva1-app6891-thumbnail-4.jpg?cb=1441274827',
-    title: 'Cat',
-  },
-  {
-    img: 'https://w0.peakpx.com/wallpaper/967/561/HD-wallpaper-one-cat-whats-up-there-cont-cute-adorable-funny-caption.jpg',
     title: 'Cat',
   },
   {

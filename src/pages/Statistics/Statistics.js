@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { useAxios } from '../../hooks/use-Axios';
+import { useAxios } from '../../hooks/useAxios';
+import { getBooks } from '../../api/books';
 
 import Spinner from '../../components/Spinner';
 
@@ -14,7 +15,7 @@ import Paper from '@mui/material/Paper';
 import { Container } from '@mui/system';
 
 const Statistics = () => {
-  const { books, isLoading, isError } = useAxios();
+  const { books, isLoading, isError } = useAxios(getBooks);
   return (
     <Container>
       <TableContainer component={Paper}>

@@ -1,10 +1,13 @@
 import React from 'react';
 
-import { useAxios } from '../../../hooks/use-Axios';
+import { useAxios } from '../../../hooks/useAxios';
+import { getBook } from '../../../api/books';
 
 import { useParams } from 'react-router-dom';
 
 import Spinner from '../../../components/Spinner';
+
+import moment from 'moment';
 
 import {
   Card,
@@ -17,14 +20,18 @@ import { Container } from '@mui/system';
 
 const BookDetails = () => {
   const params = useParams();
-  const { books: book, isLoading, isError } = useAxios(`/${params.id}`);
+  const {
+    books: book,
+    isLoading,
+    isError,
+  } = useAxios(() => getBook(params.id));
 
   return (
     <>
       <Container>
         {isLoading && !isError && <Spinner />}
         {isError && <Spinner status="error" />}
-        {!isLoading && (
+        {book && !isLoading && !isError && (
           <Card>
             <CardMedia
               component="img"
@@ -34,7 +41,7 @@ const BookDetails = () => {
             />
             <CardHeader
               title={book.title}
-              subheader={book.publishDate.slice(0, 10)}
+              subheader={moment(book.publishDate).format('DD MMMM YYYY')}
             />
             <CardContent>
               <Typography variant="h6">{`Pages: ${book.pageCount}`}</Typography>
