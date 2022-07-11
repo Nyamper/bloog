@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { useAxios } from '../../hooks/useAxios';
-import { getBooks } from '../../api/books';
+import { useDispatch, useSelector } from 'react-redux';
+import { bookItemFetchStart } from '../Books/actions/booksAction';
+import * as selectors from '../Books/selectors/booksSelectors';
 
 import Spinner from '../../components/Spinner';
 
@@ -15,7 +16,15 @@ import Paper from '@mui/material/Paper';
 import { Container } from '@mui/system';
 
 const Statistics = () => {
-  const { books, isLoading, isError } = useAxios(getBooks);
+  const dispatch = useDispatch();
+  const books = useSelector((state) => selectors.bookItemDataSelector(state));
+  const isLoading = useSelector(selectors.bookItemLoadingSelector);
+  const isError = useSelector(selectors.bookItemErrorSelector);
+
+  useEffect(() => {
+    dispatch(bookItemFetchStart(''));
+  }, [dispatch]);
+
   return (
     <Container>
       <TableContainer component={Paper}>

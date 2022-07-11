@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ImageList, ImageListItem, Typography } from '@mui/material';
+import { ImageListItem, Typography } from '@mui/material';
 import { Container } from '@mui/system';
 
 import { StyledImageList } from './styles';

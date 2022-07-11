@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { bookItemFetchStart } from './actions/booksAction';
@@ -19,6 +19,7 @@ import {
 import { Container } from '@mui/system';
 
 const Books = () => {
+  const moveUpRef = useRef(null);
   const params = useParams();
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
@@ -30,16 +31,21 @@ const Books = () => {
   const indexOfLastBook = currentPage * booksPerPage;
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
 
-  if (currentPage !== params.page) {
-    setCurrentPage(params.page);
-  }
-
   useEffect(() => {
     dispatch(bookItemFetchStart(''));
   }, [dispatch]);
 
+  if (currentPage !== params.page) {
+    setCurrentPage(params.page);
+  }
+
+  const moveUp = () => {
+    moveUpRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <>
+      <div ref={moveUpRef} />
       <Container maxWidth="xl">
         <StyledBoxWrapper>
           {isLoading && !isError && <Spinner />}
@@ -58,7 +64,11 @@ const Books = () => {
       </Container>
       <StyledPaginationContainer>
         {!isLoading && !isError && (
-          <Pagination booksPerPage={booksPerPage} totalBooks={books.length} />
+          <Pagination
+            booksPerPage={booksPerPage}
+            totalBooks={books.length}
+            moveUp={moveUp}
+          />
         )}
       </StyledPaginationContainer>
     </>
@@ -66,45 +76,3 @@ const Books = () => {
 };
 
 export default Books;
-
-// const Books = () => {
-//   const params = useParams();
-//   const { books, isLoading, isError } = useAxios(getBooks);
-//   const [currentPage, setCurrentPage] = useState(1);
-//   const [booksPerPage, setBooksPerPage] = useState(20);
-
-//   if (currentPage !== params.page) {
-//     setCurrentPage(params.page);
-//   }
-
-//   const indexOfLastBook = currentPage * booksPerPage;
-//   const indexOfFirstBook = indexOfLastBook - booksPerPage;
-
-//   return (
-//     <>
-//       <Container maxWidth="xl">
-//         <StyledBoxWrapper>
-//           {isLoading && !isError && <Spinner />}
-//           {isError && <Spinner status="error" />}
-//           {books &&
-//             !isLoading &&
-//             !isError &&
-//             books.slice(indexOfFirstBook, indexOfLastBook).map((book) => {
-//               return (
-//                 <StyledBox key={book.id}>
-//                   <CardBook book={book} />
-//                 </StyledBox>
-//               );
-//             })}
-//         </StyledBoxWrapper>
-//       </Container>
-//       <StyledPaginationContainer>
-//         {!isLoading && !isError && (
-//           <Pagination booksPerPage={booksPerPage} totalBooks={books.length} />
-//         )}
-//       </StyledPaginationContainer>
-//     </>
-//   );
-// };
-
-// export default Books;
