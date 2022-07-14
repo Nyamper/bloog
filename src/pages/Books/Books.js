@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { bookItemFetchStart } from './actions/booksAction';
-import * as selectors from './selectors/booksSelectors';
+import * as selectors from './selectors/bookList';
+import { booksFetchStart } from './reducers/bookList';
 
 import { useParams } from 'react-router-dom';
 
@@ -24,15 +24,15 @@ const Books = () => {
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
   const [booksPerPage, setBooksPerPage] = useState(20);
-  const books = useSelector((state) => selectors.bookItemDataSelector(state));
-  const isLoading = useSelector(selectors.bookItemLoadingSelector);
-  const isError = useSelector(selectors.bookItemErrorSelector);
+  const books = useSelector(selectors.booksDataSelector);
+  const isLoading = useSelector(selectors.booksLoadingSelector);
+  const isError = useSelector(selectors.booksErrorSelector);
 
   const indexOfLastBook = currentPage * booksPerPage;
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
 
   useEffect(() => {
-    dispatch(bookItemFetchStart(''));
+    dispatch(booksFetchStart());
   }, [dispatch]);
 
   if (currentPage !== params.page) {
@@ -55,7 +55,7 @@ const Books = () => {
             !isError &&
             books.slice(indexOfFirstBook, indexOfLastBook).map((book) => {
               return (
-                <StyledBox key={book.id}>
+                <StyledBox key={book._id}>
                   <CardBook book={book} />
                 </StyledBox>
               );

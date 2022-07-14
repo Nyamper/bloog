@@ -1,22 +1,23 @@
 import { put, call, takeLatest } from 'redux-saga/effects';
 import { getBook } from '../../../api/books';
-import { BOOK_ITEM_FETCH_START } from '../actionTypes/booksConst';
+
 import {
+  bookItemFetchStart,
   bookItemFetchError,
   bookItemFetchInProgress,
   bookItemFetchSuccess,
-} from '../actions/booksAction';
+} from '../reducers/bookItem';
 
-function* bookFetchSaga({ payload: { id } }) {
+function* bookItemFetchSaga({ payload }) {
   try {
     yield put(bookItemFetchInProgress());
-    const data = yield call(getBook, id);
+    const data = yield call(getBook, payload.bookId);
     yield put(bookItemFetchSuccess(data));
   } catch (error) {
     yield put(bookItemFetchError());
   }
 }
 
-export function* bookFetchWatcher() {
-  yield takeLatest(BOOK_ITEM_FETCH_START, bookFetchSaga);
+export default function* bookItemFetchWatcher() {
+  yield takeLatest(bookItemFetchStart, bookItemFetchSaga);
 }

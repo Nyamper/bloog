@@ -5,7 +5,7 @@ import { StyledPaginationLink, StyledPagination } from './styles';
 const Pagination = ({ booksPerPage, totalBooks, moveUp }) => {
   const pageNumbers = [];
 
-  for (let i = 1; i < Math.floor(totalBooks / booksPerPage) + 1; i++) {
+  for (let i = 1; i < Math.ceil(totalBooks / booksPerPage) + 1; i++) {
     pageNumbers.push(i);
   }
 

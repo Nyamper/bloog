@@ -17,3 +17,12 @@ export const getBook = async (bookId) => {
     return Promise.reject(error);
   }
 };
+
+export const deleteBook = async (bookId) => {
+  try {
+    const book = await client.delete(`/books/${bookId}`);
+    return book;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};

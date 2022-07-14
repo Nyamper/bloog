@@ -1,4 +1,5 @@
-export const baseURL = 'https://fakerestapi.azurewebsites.net/api/v1';
+export const baseURL = 'http://localhost/api/';
+// export const baseURL = 'https://fakerestapi.azurewebsites.net/api/v1';
 
 export const itemData = [
   {

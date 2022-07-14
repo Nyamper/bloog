@@ -15,7 +15,6 @@ const HomePage = () => {
           Some information about me will be here. Maybe.
         </Typography>
         <Typography variant="h4">You can look at the cats for now</Typography>
-
         <StyledImageList cols={4} rowHeight={164}>
           {itemData.map((item) => (
             <ImageListItem key={item.img}>

@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { bookItemFetchStart } from '../Books/actions/booksAction';
-import * as selectors from '../Books/selectors/booksSelectors';
+import * as selectors from './selectors/bookList';
+import { statisticsFetchStart } from './reducers/bookList';
 
 import Spinner from '../../components/Spinner';
+
+import { StyledTable } from './styles';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -17,18 +19,18 @@ import { Container } from '@mui/system';
 
 const Statistics = () => {
   const dispatch = useDispatch();
-  const books = useSelector((state) => selectors.bookItemDataSelector(state));
-  const isLoading = useSelector(selectors.bookItemLoadingSelector);
-  const isError = useSelector(selectors.bookItemErrorSelector);
+  const books = useSelector(selectors.statisticsDataSelector);
+  const isLoading = useSelector(selectors.statisticsLoadingSelector);
+  const isError = useSelector(selectors.statisticsErrorSelector);
 
   useEffect(() => {
-    dispatch(bookItemFetchStart(''));
+    dispatch(statisticsFetchStart());
   }, [dispatch]);
 
   return (
     <Container>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <StyledTable aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
@@ -43,13 +45,10 @@ const Statistics = () => {
             {isError && <Spinner status="error" />}
             {!isLoading &&
               books.map(
-                ({ id, title, publishDate, description, pageCount }) => (
-                  <TableRow
-                    key={id}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
+                ({ _id, title, publishDate, description, pageCount }) => (
+                  <TableRow key={_id}>
                     <TableCell component="th" scope="row">
-                      {id}
+                      {_id}
                     </TableCell>
                     <TableCell align="left">{title}</TableCell>
                     <TableCell align="left">
@@ -61,7 +60,7 @@ const Statistics = () => {
                 )
               )}
           </TableBody>
-        </Table>
+        </StyledTable>
       </TableContainer>
     </Container>
   );

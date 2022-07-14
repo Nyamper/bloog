@@ -1,9 +1,13 @@
 import { all, fork } from 'redux-saga/effects';
 
-import * as bookItemSagas from '../../pages/Books/sagas';
+import booksFetchWatcher from '../../pages/Books/sagas';
+import bookFetchWatcher from '../../pages/BookDetails/sagas';
+import statisticsFetchWatcher from '../../pages/Statistics/sagas';
 
 const combinedSagas = {
-  ...bookItemSagas,
+  books: booksFetchWatcher,
+  bookItem: bookFetchWatcher,
+  statistics: statisticsFetchWatcher,
 };
 
 export default function* rootSaga() {

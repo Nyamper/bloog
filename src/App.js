@@ -5,7 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import HomePage from './pages/Home';
 import Books from './pages/Books';
-import BookDetails from './pages/Books/BookDetails';
+import BookDetails from './pages/BookDetails';
 import Statistics from './pages/Statistics';
 
 const App = () => {

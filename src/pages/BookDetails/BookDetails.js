@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { bookItemFetchStart } from '../actions/booksAction';
-import * as selectors from '../selectors/booksSelectors';
+import { bookItemFetchStart } from './reducers/bookItem';
+import * as selectors from './selectors/bookItem';
 
 import { useParams } from 'react-router-dom';
 
-import Spinner from '../../../components/Spinner';
+import Spinner from '../../components/Spinner';
 
 import moment from 'moment';
 
@@ -20,14 +20,14 @@ import {
 import { Container } from '@mui/system';
 
 const BookDetails = () => {
-  const book = useSelector((state) => selectors.bookItemDataSelector(state));
+  const book = useSelector(selectors.bookItemDataSelector);
   const isLoading = useSelector(selectors.bookItemLoadingSelector);
   const isError = useSelector(selectors.bookItemErrorSelector);
   const params = useParams();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(bookItemFetchStart(params.id));
+    dispatch(bookItemFetchStart({ bookId: params.id }));
   }, [dispatch, params.id]);
 
   return (
