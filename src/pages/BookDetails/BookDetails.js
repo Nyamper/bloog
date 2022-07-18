@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { bookItemFetchStart } from './reducers/bookItem';
+import { fetchBook } from './thunk/bookThunk';
 import * as selectors from './selectors/bookItem';
 
 import { useParams } from 'react-router-dom';
@@ -27,7 +27,7 @@ const BookDetails = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(bookItemFetchStart({ bookId: params.id }));
+    dispatch(fetchBook(params.id));
   }, [dispatch, params.id]);
 
   return (

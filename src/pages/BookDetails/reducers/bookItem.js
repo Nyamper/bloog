@@ -1,11 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 import { bookItemSliceName } from './constants';
-import {
-  bookItemFetchStartAction,
-  bookItemFetchInProgressAction,
-  bookItemFetchSuccessAction,
-  bookItemFetchErrorAction,
-} from './actions';
+import * as actions from './actions';
+
+import { fetchBook } from '../thunk/bookThunk';
 
 const initialState = {
   data: [],
@@ -16,19 +14,11 @@ const initialState = {
 const bookItemSlice = createSlice({
   name: bookItemSliceName,
   initialState,
-  reducers: {
-    bookItemFetchStart: bookItemFetchStartAction,
-    bookItemFetchInProgress: bookItemFetchInProgressAction,
-    bookItemFetchSuccess: bookItemFetchSuccessAction,
-    bookItemFetchError: bookItemFetchErrorAction,
+  extraReducers: {
+    [fetchBook.pending]: actions.fetchBookPendingAction,
+    [fetchBook.fulfilled]: actions.fetchBookFulfilledAction,
+    [fetchBook.rejected]: actions.fetchBookRejectedAction,
   },
 });
-
-export const {
-  bookItemFetchStart,
-  bookItemFetchInProgress,
-  bookItemFetchError,
-  bookItemFetchSuccess,
-} = bookItemSlice.actions;
 
 export default bookItemSlice.reducer;

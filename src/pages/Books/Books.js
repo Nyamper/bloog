@@ -1,13 +1,20 @@
-import React, { useState, useEffect, useRef } from 'react';
-
-import { useDispatch, useSelector } from 'react-redux';
-import * as selectors from './selectors/bookList';
-import { booksFetchStart } from './reducers/bookList';
+import React, { useState, useEffect } from 'react';
 
 import { useParams } from 'react-router-dom';
 
-import CardBook from './CardBook';
+import { useDispatch, useSelector } from 'react-redux';
+import * as selectors from './selectors/bookList';
 
+import { fetchBooks } from './thunk/booksThunk';
+import {
+  showCreateEditModal,
+  setTitle,
+  createModal,
+} from '../../components/CreateEditBookForm/reducers/createEditModalSlice';
+
+import CardBook from './components/CardBook';
+
+import CreateBookModal from '../../components/CreateEditBookForm/';
 import Spinner from '../../components/Spinner';
 import Pagination from '../../components/Pagination/Pagination';
 
@@ -17,13 +24,17 @@ import {
   StyledPaginationContainer,
 } from './styles';
 import { Container } from '@mui/system';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 const Books = () => {
-  const moveUpRef = useRef(null);
   const params = useParams();
+
   const dispatch = useDispatch();
+
   const [currentPage, setCurrentPage] = useState(1);
   const [booksPerPage, setBooksPerPage] = useState(20);
+
   const books = useSelector(selectors.booksDataSelector);
   const isLoading = useSelector(selectors.booksLoadingSelector);
   const isError = useSelector(selectors.booksErrorSelector);
@@ -32,20 +43,29 @@ const Books = () => {
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
 
   useEffect(() => {
-    dispatch(booksFetchStart());
+    dispatch(fetchBooks());
   }, [dispatch]);
 
   if (currentPage !== params.page) {
     setCurrentPage(params.page);
   }
 
-  const moveUp = () => {
-    moveUpRef.current.scrollIntoView({ behavior: 'smooth' });
+  const handleAddBook = () => {
+    dispatch(createModal());
+    dispatch(setTitle('Create new book'));
+    dispatch(showCreateEditModal());
   };
 
   return (
     <>
-      <div ref={moveUpRef} />
+      {!isLoading && books <= 0 && (
+        <Typography variant="h5" align="center">
+          you have no books
+        </Typography>
+      )}
+      <Button variant="outlined" onClick={handleAddBook}>
+        Add book
+      </Button>
       <Container maxWidth="xl">
         <StyledBoxWrapper>
           {isLoading && !isError && <Spinner />}
@@ -67,10 +87,11 @@ const Books = () => {
           <Pagination
             booksPerPage={booksPerPage}
             totalBooks={books.length}
-            moveUp={moveUp}
+            onClick={window.scrollTo(0, 0)}
           />
         )}
       </StyledPaginationContainer>
+      <CreateBookModal />
     </>
   );
 };

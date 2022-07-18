@@ -1,11 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 import { statisticsSliceName } from './constants';
-import {
-  statisticsFetchStartAction,
-  statisticsFetchInProgressAction,
-  statisticsFetchSuccessAction,
-  statisticsFetchErrorAction,
-} from './actions';
+import { fetchStatistics } from '../thunk/statisticsThunk';
+import * as actions from './actions';
 
 const initialState = {
   data: [],
@@ -16,19 +13,11 @@ const initialState = {
 const statisticsSlice = createSlice({
   name: statisticsSliceName,
   initialState,
-  reducers: {
-    statisticsFetchStart: statisticsFetchStartAction,
-    statisticsFetchInProgress: statisticsFetchInProgressAction,
-    statisticsFetchSuccess: statisticsFetchSuccessAction,
-    statisticsFetchError: statisticsFetchErrorAction,
+  extraReducers: {
+    [fetchStatistics.pending]: actions.fetchBooksPendingAction,
+    [fetchStatistics.fulfilled]: actions.fetchBooksFulfilledAction,
+    [fetchStatistics.rejected]: actions.fetchBooksRejectedAction,
   },
 });
-
-export const {
-  statisticsFetchStart,
-  statisticsFetchInProgress,
-  statisticsFetchError,
-  statisticsFetchSuccess,
-} = statisticsSlice.actions;
 
 export default statisticsSlice.reducer;

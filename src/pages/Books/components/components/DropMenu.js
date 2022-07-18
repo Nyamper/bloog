@@ -1,58 +1,62 @@
 import React, { useState } from 'react';
 
+import { useDispatch } from 'react-redux';
+
+import {
+  showCreateEditModal,
+  setTitle,
+  getBookId,
+  editModal,
+} from '../../../../components/CreateEditBookForm/reducers/createEditModalSlice';
+import DeleteModal from '../../../../components/DeleteModal';
+
 import { IconButton, Menu, MenuItem } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-import EditBookModal from '../../../components/EditBookModal/';
-import DeleteModal from '../../../components/DeleteModal';
-
 const DropMenu = ({ bookId, title }) => {
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [deleteModal, setDeleteModal] = useState(false);
   const open = Boolean(anchorEl);
 
-  const handleClick = (event) => {
+  const handleEdit = () => {
+    dispatch(editModal());
+    dispatch(getBookId(bookId));
+    dispatch(setTitle(`Edit ${title}`));
+    dispatch(showCreateEditModal());
+    setAnchorEl(null);
+  };
+
+  const handlePopupClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handlePopupClose = () => {
     setAnchorEl(null);
-  };
-
-  const showUpdateModal = () => {
-    setAnchorEl(null);
-    setShowEditModal(true);
-  };
-
-  const showDeleteModal = () => {
-    setAnchorEl(null);
-    setDeleteModal(true);
   };
 
   return (
     <>
-      {deleteModal && <DeleteModal bookId={bookId} title={title} />}
-      {showEditModal && <EditBookModal />}
       <IconButton aria-label="settings">
         <MoreVertIcon
           id="basic-button"
           aria-controls={open ? 'basic-menu' : undefined}
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
-          onClick={handleClick}
+          onClick={handlePopupClick}
         />
         <Menu
           id="basic-menu"
           anchorEl={anchorEl}
           open={open}
-          onClose={handleClose}
+          onClose={handlePopupClose}
           MenuListProps={{
             'aria-labelledby': 'basic-button',
           }}
         >
-          <MenuItem onClick={showUpdateModal}>Update</MenuItem>
-          <MenuItem onClick={showDeleteModal}>Delete</MenuItem>
+          <MenuItem onClick={handleEdit}>Edit</MenuItem>
+          <MenuItem onClick={handlePopupClose}>
+            <DeleteModal bookId={bookId} title={title} />
+          </MenuItem>
         </Menu>
       </IconButton>
     </>

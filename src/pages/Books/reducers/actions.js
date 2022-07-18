@@ -1,13 +1,12 @@
-export const booksFetchStartAction = () => {};
-export const booksFetchInProgressAction = (state) => {
+export const fetchBooksPendingAction = (state, action) => {
   state.loading = true;
   state.error = null;
 };
-export const booksFetchSuccessAction = (state, action) => {
+export const fetchBooksFulfilledAction = (state, action) => {
   state.loading = false;
   state.data = action.payload;
 };
-export const booksFetchErrorAction = (state) => {
+export const fetchBooksRejectedAction = (state, action) => {
   state.loading = false;
   state.error = true;
 };

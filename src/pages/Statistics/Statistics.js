@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import * as selectors from './selectors/bookList';
-import { statisticsFetchStart } from './reducers/bookList';
+import { fetchStatistics } from './thunk/statisticsThunk';
 
 import Spinner from '../../components/Spinner';
 
@@ -24,7 +24,7 @@ const Statistics = () => {
   const isError = useSelector(selectors.statisticsErrorSelector);
 
   useEffect(() => {
-    dispatch(statisticsFetchStart());
+    dispatch(fetchStatistics());
   }, [dispatch]);
 
   return (

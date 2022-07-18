@@ -1,13 +1,12 @@
-export const statisticsFetchStartAction = () => {};
-export const statisticsFetchInProgressAction = (state) => {
+export const fetchBooksPendingAction = (state, action) => {
   state.loading = true;
   state.error = null;
 };
-export const statisticsFetchSuccessAction = (state, action) => {
+export const fetchBooksFulfilledAction = (state, action) => {
   state.loading = false;
   state.data = action.payload;
 };
-export const statisticsFetchErrorAction = (state) => {
+export const fetchBooksRejectedAction = (state, action) => {
   state.loading = false;
   state.error = true;
 };
