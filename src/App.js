@@ -1,10 +1,11 @@
 import React from 'react';
-
 import { Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import Layout from './components/Layout';
-import HomePage from './pages/Home';
+
 import Books from './pages/Books';
+import HomePage from './pages/Home';
 import BookDetails from './pages/BookDetails';
 import Statistics from './pages/Statistics';
 
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="*" element={<HomePage />} />
         </Route>
       </Routes>
+      <ToastContainer autoClose={2000} />
     </>
   );
 };

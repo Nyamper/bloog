@@ -27,9 +27,9 @@ export const postBook = async (data) => {
   }
 };
 
-export const updateBook = async ({ bookId, data }) => {
+export const updateBook = async (data, id) => {
   try {
-    const book = await client.patch(`/books/${bookId}`, data);
+    const book = await client.patch(`/books/${id}`, data);
     return book;
   } catch (error) {
     return Promise.reject(error);

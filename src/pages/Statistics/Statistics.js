@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import * as selectors from './selectors/bookList';
 import { fetchStatistics } from './thunk/statisticsThunk';
+
+import * as selectors from './selectors/bookList';
 
 import Spinner from '../../components/Spinner';
 
 import { StyledTable } from './styles';
-
-import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';

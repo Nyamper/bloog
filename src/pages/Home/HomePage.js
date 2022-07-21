@@ -2,7 +2,6 @@ import React from 'react';
 
 import { ImageListItem, Typography } from '@mui/material';
 import { Container } from '@mui/system';
-
 import { StyledImageList } from './styles';
 
 import { itemData } from '../../constants';

@@ -1,18 +1,33 @@
 import { createSelector } from 'reselect';
 
-const booksStateSelector = (state) => state.books;
+const bookListStateSelector = (state) => state.books;
 
-export const booksLoadingSelector = createSelector(
-  booksStateSelector,
+export const bookListLoadingSelector = createSelector(
+  bookListStateSelector,
   (books) => books.loading
 );
 
-export const booksDataSelector = createSelector(
-  booksStateSelector,
+export const bookListDataSelector = createSelector(
+  bookListStateSelector,
   (books) => books.data
 );
 
-export const booksErrorSelector = createSelector(
-  booksStateSelector,
+export const bookListErrorSelector = createSelector(
+  bookListStateSelector,
   (books) => books.error
+);
+
+export const bookListUpdateStateSelector = createSelector(
+  bookListStateSelector,
+  (books) => books.updateState
+);
+
+export const bookListCreateStateSelector = createSelector(
+  bookListStateSelector,
+  (books) => books.createState
+);
+
+export const bookListDeleteStateSelector = createSelector(
+  bookListStateSelector,
+  (books) => books.deleteState
 );

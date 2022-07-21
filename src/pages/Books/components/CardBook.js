@@ -1,9 +1,7 @@
 import React from 'react';
-
-import DropMenu from './components/DropMenu';
-
+import DropMenu from './DropMenu/DropMenu';
 import moment from 'moment';
-
+import { Link } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -14,9 +12,7 @@ import {
   Typography,
 } from '@mui/material';
 
-import { Link } from 'react-router-dom';
-
-const CardBook = ({ book }) => {
+const CardBook = ({ book, onEdit, onDelete }) => {
   const { _id, title, description } = book;
 
   return (
@@ -31,7 +27,7 @@ const CardBook = ({ book }) => {
         <CardHeader
           title={title}
           subheader={moment(book.publishDate).format('DD MMMM YYYY')}
-          action={<DropMenu bookId={_id} title={title} />}
+          action={<DropMenu book={book} onEdit={onEdit} onDelete={onDelete} />}
         />
         <CardContent>
           <Typography variant="body2">{description.slice(0, 200)}</Typography>

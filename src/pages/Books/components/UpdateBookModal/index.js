@@ -1,0 +1,1 @@
+export { UpdateBookModal } from "./UpdateBookModal";
