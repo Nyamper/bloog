@@ -52,6 +52,9 @@ const bookListSlice = createSlice({
     bookDeleteInProgress,
     bookDeleteSuccess,
     bookDeleteError,
+    bookUpdateReset: (state) => {
+      state.updateState = initialState.updateState;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -90,6 +93,7 @@ export const {
   bookUpdateInProgress: bookUpdateInProgressAction,
   bookUpdateSuccess: bookUpdateSuccessAction,
   bookUpdateError: bookUpdateErrorAction,
+  bookUpdateReset,
   bookDeleteItemDataSet: bookDeleteItemDataSetAction,
   bookDeleteInProgress: bookDeleteInProgressAction,
   bookDeleteSuccess: bookDeleteSuccessAction,

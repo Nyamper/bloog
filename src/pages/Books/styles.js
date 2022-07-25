@@ -19,3 +19,9 @@ export const StyledPaginationContainer = styled(Box)`
   display: flex;
   margin-bottom: 2rem;
 `;
+
+export const StyledButtonContainer = styled(Box)`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+`;

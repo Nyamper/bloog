@@ -15,10 +15,6 @@ export const bookFetchError = (state) => {
   state.error = true;
 };
 
-export const bookPagination = (state, action) => {
-  return { ...state, ...action.payload };
-};
-
 export const bookCreateInProgress = (state) => {
   state.createState.loading = true;
 };
@@ -33,11 +29,18 @@ export const bookUpdateItemIdSet = (state, action) => {
   state.updateState.fetchData = action.payload;
 };
 export const bookUpdateInProgress = (state) => {
-  state.updateState.loading = true;
+  state.updateState.secondLoading = true;
   state.updateState.error = false;
 };
+
+// };
+// export const bookUpdateInProgress = (state) => {
+//   state.updateState.loading = true;
+//   state.updateState.error = false;
+// };
+
 export const bookUpdateSuccess = (state) => {
-  state.updateState.loading = false;
+  state.updateState.loading = false; //here
 };
 export const bookUpdateError = (state) => {
   state.updateState.loading = false;

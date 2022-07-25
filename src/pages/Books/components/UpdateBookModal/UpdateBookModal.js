@@ -1,24 +1,44 @@
+import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal } from '../../../../components/Modal';
 import { bookListUpdateStateSelector } from '../../selectors/bookList';
 import { bookItemUpdateDataFetch } from '../../thunk/booksThunk';
 import { BookForm } from '../BookForm/BookForm';
+import { Spin } from 'antd';
+import { StyledContainer } from './styles';
 
 export const UpdateBookModal = ({ onSave, onCancel }) => {
+  UpdateBookModal.propTypes = {
+    onSave: PropTypes.func,
+    onCancel: PropTypes.func,
+  };
+
   const dispatch = useDispatch();
-  const { fetchData, data, loading } = useSelector(bookListUpdateStateSelector);
+  const { fetchData, data, loading, secondLoading } = useSelector(
+    bookListUpdateStateSelector
+  );
 
   useEffect(() => {
     dispatch(bookItemUpdateDataFetch(fetchData));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
   return (
-    <Modal form="edit" onCancel={onCancel} formName="edit">
-      {loading && <div>Loading</div>}
+    <Modal onCancel={onCancel} formName="edit" loading={secondLoading}>
+      {loading && (
+        <StyledContainer>
+          <Spin size="large" />
+        </StyledContainer>
+      )}
       {!loading && data && (
-        <BookForm mode="edit" onSave={onSave} data={data} name="edit" />
+        <BookForm
+          mode="edit"
+          onSave={onSave}
+          data={data}
+          name="edit"
+          loading={secondLoading}
+        />
       )}
     </Modal>
   );

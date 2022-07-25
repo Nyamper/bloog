@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
-import DeleteModal from '../../../../components/DeleteModal';
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 import { IconButton, Menu, MenuItem } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 const DropMenu = ({ book, onEdit, onDelete }) => {
+  DropMenu.propTypes = {
+    book: PropTypes.object,
+    onEdit: PropTypes.func,
+    onDelete: PropTypes.func,
+  };
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -13,6 +18,16 @@ const DropMenu = ({ book, onEdit, onDelete }) => {
 
   const handlePopupClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleDelete = () => {
+    setAnchorEl(null);
+    onDelete(book);
+  };
+
+  const handleEdit = () => {
+    setAnchorEl(null);
+    onEdit(book._id);
   };
 
   return (
@@ -34,17 +49,8 @@ const DropMenu = ({ book, onEdit, onDelete }) => {
             'aria-labelledby': 'basic-button',
           }}
         >
-          <MenuItem
-            onClick={() => {
-              onEdit(book._id);
-              setAnchorEl(null);
-            }}
-          >
-            Edit
-          </MenuItem>
-          <MenuItem onClick={handlePopupClose}>
-            <DeleteModal book={book} onDelete={onDelete} />
-          </MenuItem>
+          <MenuItem onClick={handleEdit}>Edit</MenuItem>
+          <MenuItem onClick={handleDelete}>Delete</MenuItem>
         </Menu>
       </IconButton>
     </>

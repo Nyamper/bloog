@@ -2,7 +2,10 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { bookUpdateItemIdSetAction } from './reducer/bookList';
+import {
+  bookUpdateItemIdSetAction,
+  bookDeleteItemDataSetAction,
+} from './reducer/bookList';
 import { modalOpenToggleAction } from '../../store/modal/reducer/modal';
 import { modalStateSelector } from '../../store/modal/selectors/modal';
 import * as selectors from './selectors/bookList';
@@ -15,6 +18,7 @@ import {
 
 import { CreateBookModal } from './components/CreateBookModal';
 import { UpdateBookModal } from './components/UpdateBookModal';
+import { DeleteBookModal } from './components/DeleteBookModal';
 import Pagination from '../../components/Pagination/Pagination';
 import CardBook from './components/CardBook';
 import Spinner from '../../components/Spinner';
@@ -23,8 +27,9 @@ import { Container } from '@mui/system';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {
-  StyledBoxWrapper,
   StyledBox,
+  StyledBoxWrapper,
+  StyledButtonContainer,
   StyledPaginationContainer,
 } from './styles';
 
@@ -66,16 +71,36 @@ const Books = () => {
     dispatch(modalOpenToggleAction({ name: 'Create' }));
   };
 
-  const handleEditModalOpen = useCallback((id) => {
-    dispatch(bookUpdateItemIdSetAction({ id }));
-    dispatch(modalOpenToggleAction({ name: 'Update' }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const handleEditModalOpen = useCallback(
+    (id) => {
+      dispatch(bookUpdateItemIdSetAction({ id }));
+      dispatch(modalOpenToggleAction({ name: 'Update' }));
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    [dispatch]
+  );
 
   const handleEditModalClose = useCallback(() => {
     dispatch(modalOpenToggleAction({ name: 'Update' }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
+
+  const handleDeleteModalOpen = useCallback(
+    (item) => {
+      dispatch(bookDeleteItemDataSetAction(item));
+      dispatch(modalOpenToggleAction({ name: 'Delete' }));
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    [dispatch]
+  );
+
+  const handleDeleteModalClose = useCallback(
+    (item) => {
+      dispatch(modalOpenToggleAction({ name: 'Delete' }));
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    [dispatch]
+  );
 
   return (
     <>
@@ -84,9 +109,15 @@ const Books = () => {
           you have no books
         </Typography>
       )}
-      <Button variant="outlined" onClick={handleCreateModalOpenToggle}>
-        Add book
-      </Button>
+      <StyledButtonContainer>
+        <Button
+          size="large"
+          variant="outlined"
+          onClick={handleCreateModalOpenToggle}
+        >
+          Add book
+        </Button>
+      </StyledButtonContainer>
       <Container maxWidth="xl">
         <StyledBoxWrapper>
           {isLoading && !isError && <Spinner />}
@@ -100,7 +131,7 @@ const Books = () => {
                   <CardBook
                     book={book}
                     onEdit={handleEditModalOpen}
-                    onDelete={handleDeleteBook}
+                    onDelete={handleDeleteModalOpen}
                   />
                 </StyledBox>
               );
@@ -127,6 +158,13 @@ const Books = () => {
         <UpdateBookModal
           onSave={handleUpdateBook}
           onCancel={handleEditModalClose}
+        />
+      )}
+
+      {open && name === 'Delete' && (
+        <DeleteBookModal
+          onSave={handleDeleteBook}
+          onCancel={handleDeleteModalClose}
         />
       )}
     </>

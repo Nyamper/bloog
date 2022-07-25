@@ -1,0 +1,1 @@
+export { DeleteBookModal } from './DeleteBookModal';

@@ -1,6 +1,15 @@
+import PropTypes from 'prop-types';
 import { Button, Modal as AntdModal } from 'antd';
 
 export const Modal = ({ children, onCancel, formName, loading, onSave }) => {
+  Modal.propTypes = {
+    children: PropTypes.node,
+    onCancel: PropTypes.func,
+    formName: PropTypes.oneOf(['create', 'delete', 'edit']),
+    loading: PropTypes.bool,
+    onSave: PropTypes.func,
+  };
+
   return (
     <AntdModal
       visible={true}
@@ -11,6 +20,7 @@ export const Modal = ({ children, onCancel, formName, loading, onSave }) => {
           Cancel
         </Button>,
         <Button
+          danger={formName === 'delete'}
           key="submit"
           type="primary"
           loading={loading}
@@ -18,7 +28,7 @@ export const Modal = ({ children, onCancel, formName, loading, onSave }) => {
           form={formName}
           onClick={onSave}
         >
-          Confirm
+          {formName.toUpperCase()}
         </Button>,
       ]}
     >

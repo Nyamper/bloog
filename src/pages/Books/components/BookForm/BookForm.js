@@ -1,14 +1,39 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import { useForm, Controller } from 'react-hook-form';
 import { Input, Typography, DatePicker } from 'antd';
+import { StyledLabel, StyledError } from './styles';
+import { useYupValidationResolver } from '../../../../hooks/useYup';
 import moment from 'moment';
+import * as yup from 'yup';
 
-export const BookForm = (props) => {
-  const { mode, data, name, onSave } = props;
+export const BookForm = ({ mode, data, name, onSave, loading = false }) => {
   const { Title } = Typography;
-  const { TextArea } = Input;
 
-  const { control, handleSubmit } = useForm();
+  BookForm.propTypes = {
+    mode: PropTypes.oneOf(['create', 'edit']),
+    data: PropTypes.object,
+    name: PropTypes.string,
+    onSave: PropTypes.func,
+    loading: PropTypes.bool,
+  };
+
+  const validationSchema = yup.object({
+    title: yup.string().required(`Title shouldn't be empty`),
+    description: yup.string().required(`Description shouldn't be empty`),
+    excerpt: yup.string().required(`Excerpt shouldn't be empty`),
+    pageCount: yup
+      .number()
+      .required(`Page count shouldn't be empty`)
+      .typeError('Must be a number'),
+    publishDate: yup.date(),
+  });
+
+  const resolver = useYupValidationResolver(validationSchema);
+  const {
+    formState: { errors },
+    control,
+    handleSubmit,
+  } = useForm({ resolver });
 
   const onSubmit = async (values) => {
     try {
@@ -23,52 +48,52 @@ export const BookForm = (props) => {
   return (
     <>
       {mode === 'create' && <Title level={3}>Create Book</Title>}
-      {mode === 'update' && <Title level={3}>Update Book</Title>}
+      {mode === 'edit' && <Title level={3}>Update Book</Title>}
       <form onSubmit={handleSubmit(onSubmit)} id={name}>
-        <label>Book Title</label>
+        <StyledLabel>Book Title</StyledLabel>
         <Controller
-          rules={{ required: true }}
-          render={({ field }) => <Input {...field} />}
+          render={({ field }) => <Input readOnly={loading} {...field} />}
           name="title"
           control={control}
           defaultValue={data?.title || ''}
         />
-
-        <label>Description</label>
+        {errors.title && <StyledError>{errors.title.message}</StyledError>}
+        <StyledLabel>Description</StyledLabel>
         <Controller
-          rules={{ required: true }}
-          render={({ field }) => <Input {...field} />}
+          render={({ field }) => <Input readOnly={loading} {...field} />}
           name="description"
           control={control}
           defaultValue={data?.description || ''}
         />
-
-        <label>Excerpt</label>
+        {errors.description && (
+          <StyledError>{errors.description.message}</StyledError>
+        )}
+        <StyledLabel>Excerpt</StyledLabel>
         <Controller
-          rules={{ required: true }}
-          render={({ field }) => (
-            <TextArea style={{ height: '3rem' }} {...field} />
-          )}
+          render={({ field }) => <Input readOnly={loading} {...field} />}
           name="excerpt"
           control={control}
           defaultValue={data?.excerpt || ''}
         />
-
-        <label>Page Count</label>
+        {errors.excerpt && <StyledError>{errors.excerpt.message}</StyledError>}
+        <StyledLabel>Page Count</StyledLabel>
         <Controller
-          rules={{ required: true }}
-          render={({ field }) => <Input {...field} />}
+          render={({ field }) => <Input readOnly={loading} {...field} />}
           name="pageCount"
           control={control}
           defaultValue={data?.pageCount}
         />
-
-        <label>Create Date</label>
+        {errors.pageCount && (
+          <StyledError>{errors.pageCount.message}</StyledError>
+        )}
+        <StyledLabel>Date</StyledLabel>
         <Controller
           control={control}
           name="publishDate"
           render={({ field }) => (
             <DatePicker
+              inputReadOnly
+              disabled={loading}
               format={'DD/MM/YYYY'}
               defaultValue={moment(data?.publishDate) || moment()}
               onChange={(date) => field.onChange(date._d)}

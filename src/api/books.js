@@ -36,6 +36,8 @@ export const updateBook = async (data, id) => {
   }
 };
 
+export const controller = new AbortController();
+
 export const deleteBook = async (bookId) => {
   try {
     const book = await client.delete(`/books/${bookId}`);
