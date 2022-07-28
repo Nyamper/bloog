@@ -1,32 +1,12 @@
-import PropTypes from 'prop-types';
 import { useForm, Controller } from 'react-hook-form';
 import { Input, Typography, DatePicker } from 'antd';
 import { StyledLabel, StyledError } from './styles';
 import { useYupValidationResolver } from '../../../../hooks/useYup';
+import { types, validationSchema } from './constants';
 import moment from 'moment';
-import * as yup from 'yup';
 
 export const BookForm = ({ mode, data, name, onSave, loading = false }) => {
   const { Title } = Typography;
-
-  BookForm.propTypes = {
-    mode: PropTypes.oneOf(['create', 'edit']),
-    data: PropTypes.object,
-    name: PropTypes.string,
-    onSave: PropTypes.func,
-    loading: PropTypes.bool,
-  };
-
-  const validationSchema = yup.object({
-    title: yup.string().required(`Title shouldn't be empty`),
-    description: yup.string().required(`Description shouldn't be empty`),
-    excerpt: yup.string().required(`Excerpt shouldn't be empty`),
-    pageCount: yup
-      .number()
-      .required(`Page count shouldn't be empty`)
-      .typeError('Must be a number'),
-    publishDate: yup.date(),
-  });
 
   const resolver = useYupValidationResolver(validationSchema);
   const {
@@ -35,6 +15,16 @@ export const BookForm = ({ mode, data, name, onSave, loading = false }) => {
     handleSubmit,
   } = useForm({ resolver });
 
+  /**
+   *
+   * @param {object} values
+   * @param {string} values.title
+   * @param {string} values.description
+   * @param {string} values.excerpt
+   * @param {number} values.pageCount
+   * @param {date} values.publishDate
+   *
+   */
   const onSubmit = async (values) => {
     try {
       if (!data) {
@@ -105,3 +95,5 @@ export const BookForm = ({ mode, data, name, onSave, loading = false }) => {
     </>
   );
 };
+
+BookForm.propTypes = types;

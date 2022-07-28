@@ -1,14 +1,9 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import { IconButton, Menu, MenuItem } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { types } from './constants';
 
 const DropMenu = ({ book, onEdit, onDelete }) => {
-  DropMenu.propTypes = {
-    book: PropTypes.object,
-    onEdit: PropTypes.func,
-    onDelete: PropTypes.func,
-  };
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -58,3 +53,5 @@ const DropMenu = ({ book, onEdit, onDelete }) => {
 };
 
 export default DropMenu;
+
+DropMenu.propTypes = types;

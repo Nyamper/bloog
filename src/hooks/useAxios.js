@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
+/**
+ *
+ * @param {function} getData
+ * @returns {object} books, isError, isLoading
+ */
 export const useAxios = (getData) => {
   const [books, setBooks] = useState(null);
   const [isError, setIsError] = useState(null);
+
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchData = async () => {

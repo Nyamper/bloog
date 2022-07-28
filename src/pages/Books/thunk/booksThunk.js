@@ -103,3 +103,14 @@ export const bookItemDelete = createAsyncThunk(
     }
   }
 );
+
+// export const cancelRequest = createAsyncThunk(
+//   'BOOK_LIST_CANCEL_REQUEST_THUNK_TYPE',
+//   async ({ dispatch }) => {
+//     try {
+//       await dispatch(controller.abort());
+//     } catch (error) {
+//       console.log('cancelRequest', error);
+//     }
+//   }
+// );

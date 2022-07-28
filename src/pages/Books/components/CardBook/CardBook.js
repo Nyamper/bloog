@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
-import DropMenu from './DropMenu/DropMenu';
+import DropMenu from '../DropMenu/DropMenu';
+import { types } from './constants';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import {
@@ -14,11 +14,6 @@ import {
 
 const CardBook = ({ book, onEdit, onDelete }) => {
   const { _id, title, description } = book;
-  CardBook.propTypes = {
-    book: PropTypes.object,
-    onEdit: PropTypes.func,
-    onDelete: PropTypes.func,
-  };
 
   return (
     <>
@@ -48,3 +43,5 @@ const CardBook = ({ book, onEdit, onDelete }) => {
 };
 
 export default CardBook;
+
+CardBook.propTypes = types;

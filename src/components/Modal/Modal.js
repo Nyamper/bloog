@@ -1,15 +1,7 @@
-import PropTypes from 'prop-types';
 import { Button, Modal as AntdModal } from 'antd';
+import { types } from './constants';
 
 export const Modal = ({ children, onCancel, formName, loading, onSave }) => {
-  Modal.propTypes = {
-    children: PropTypes.node,
-    onCancel: PropTypes.func,
-    formName: PropTypes.oneOf(['create', 'delete', 'edit']),
-    loading: PropTypes.bool,
-    onSave: PropTypes.func,
-  };
-
   return (
     <AntdModal
       visible={true}
@@ -40,3 +32,5 @@ export const Modal = ({ children, onCancel, formName, loading, onSave }) => {
 Modal.defaultProps = {
   onSave: () => {},
 };
+
+Modal.propTypes = types;

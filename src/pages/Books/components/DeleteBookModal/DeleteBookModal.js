@@ -1,14 +1,10 @@
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { Modal } from '../../../../components/Modal';
 import { bookListDeleteStateSelector } from '../../selectors/bookList';
+import { types } from './constants';
 
 export const DeleteBookModal = ({ onSave, onCancel }) => {
   const { loading, data } = useSelector(bookListDeleteStateSelector);
-  DeleteBookModal.propTypes = {
-    onSave: PropTypes.func,
-    onCancel: PropTypes.func,
-  };
 
   return (
     <Modal
@@ -23,3 +19,5 @@ export const DeleteBookModal = ({ onSave, onCancel }) => {
     </Modal>
   );
 };
+
+DeleteBookModal.propTypes = types;

@@ -1,5 +1,10 @@
 import { useCallback } from 'react';
 
+/**
+ *
+ * @param {object} validationSchema object with validation parameters
+ * @returns {Promise} Promise object represents the result of validation
+ */
 export const useYupValidationResolver = (validationSchema) =>
   useCallback(
     async (data) => {

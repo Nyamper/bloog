@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal } from '../../../../components/Modal';
@@ -7,13 +6,9 @@ import { bookItemUpdateDataFetch } from '../../thunk/booksThunk';
 import { BookForm } from '../BookForm/BookForm';
 import { Spin } from 'antd';
 import { StyledContainer } from './styles';
+import { types } from './constants';
 
 export const UpdateBookModal = ({ onSave, onCancel }) => {
-  UpdateBookModal.propTypes = {
-    onSave: PropTypes.func,
-    onCancel: PropTypes.func,
-  };
-
   const dispatch = useDispatch();
   const { fetchData, data, loading, secondLoading } = useSelector(
     bookListUpdateStateSelector
@@ -43,3 +38,5 @@ export const UpdateBookModal = ({ onSave, onCancel }) => {
     </Modal>
   );
 };
+
+UpdateBookModal.propTypes = types;
